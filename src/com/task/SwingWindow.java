@@ -1,5 +1,8 @@
-package com.task.drawers;
+package com.task;
 
+import com.task.drawers.ConsoleDrawer;
+import com.task.drawers.IDrawer;
+import com.task.drawers.SwingDrawer;
 import com.task.matrixes.AbstractMatrix;
 import com.task.matrixes.IMatrix;
 import com.task.matrixes.NormalMatrix;

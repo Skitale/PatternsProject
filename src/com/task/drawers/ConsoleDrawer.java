@@ -25,7 +25,15 @@ public class ConsoleDrawer<T extends Number> implements IDrawer<T> {
         String delimiterP = new String(new char[matrix.getCols() * (maxSymbNum + 1)]).replace('\0', '—');
         System.out.println();
         System.out.println(delimiterP);
-        //sb.append(delimiterP).append('\n');
+        //sb.append('\n').append(delimiterP);
+        resetHelpValue();
+    }
+
+    private void resetHelpValue(){
+        prevI = -1;
+        prevJ = -1;
+        curI = 0;
+        curJ = 0;
     }
 
     @Override
