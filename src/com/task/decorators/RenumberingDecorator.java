@@ -1,21 +1,16 @@
 package com.task.decorators;
 
-import com.task.drawers.IDrawer;
-import com.task.matrixes.AbstractMatrix;
-import com.task.matrixes.IMatrix;
+import com.task.matrixes.AMatrixBridge;
 import com.task.utils.Validator;
-import com.task.vectors.IVector;
 
-public class RenumberingColsRows extends AbstractMatrix<Integer> {
-    private AbstractMatrix<Integer> matrix;
+public class RenumberingDecorator extends AMatrixBridge<Integer> {
+    private AMatrixBridge<Integer> matrix;
     private boolean isRenumRows;
     private int from;
     private int to;
-    private IDrawer<Integer> drawer;
 
-    public RenumberingColsRows(AbstractMatrix<Integer> matrix, int from, int to, boolean isRenumRows) {
-        super(0, 0, matrix.getZeroValue());
-        this.drawer = matrix.getDrawer();
+    public RenumberingDecorator(AMatrixBridge<Integer> matrix, int from, int to, boolean isRenumRows) {
+        super(matrix.getDrawer());
         if (isRenumRows) {
             Validator.validateIndex(from, matrix.getRows());
             Validator.validateIndex(to, matrix.getRows());
@@ -40,16 +35,6 @@ public class RenumberingColsRows extends AbstractMatrix<Integer> {
     }
 
     @Override
-    public void setDrawer(IDrawer<Integer> drawer) {
-        this.drawer = drawer;
-    }
-
-    @Override
-    public IDrawer<Integer> getDrawer() {
-        return this.drawer;
-    }
-
-    @Override
     public Integer get(int row, int col) {
         if (isRenumRows) {
             return getForRenRow(row, col);
@@ -65,32 +50,6 @@ public class RenumberingColsRows extends AbstractMatrix<Integer> {
         } else {
             setForRenCol(row, col, value);
         }
-    }
-
-    @Override
-    public IVector<Integer> createVector(int cols, Integer zeroValue) {
-        return matrix.createVector(cols, zeroValue);
-    }
-
-    @Override
-    protected void drawBorder() {
-        drawer.drawBorder(this);
-    }
-
-    @Override
-    protected void drawItem(int i, int j) {
-        drawer.drawItem(this, i, j);
-    }
-
-    @Override
-    public void draw() {
-        drawBorder();
-        for (int i = 0; i < getRows(); i++) {
-            for (int j = 0; j < getCols(); j++) {
-                drawItem(i, j);
-            }
-        }
-        drawBorder();
     }
 
     private int getForRenRow(int row, int col) {
@@ -132,27 +91,7 @@ public class RenumberingColsRows extends AbstractMatrix<Integer> {
     }
 
     @Override
-    public IMatrix<Integer> getInstance() {
-        return matrix.getInstance();
+    public AMatrixBridge<Integer> getSourceObject() {
+        return matrix.getSourceObject();
     }
-
-    /*private void drawForRenRow(int row, int col) {
-        if (row == from) {
-            matrix.drawItem(to, col);
-        } else if (row == to) {
-            matrix.drawItem(from, col);
-        } else {
-            matrix.drawItem(row, col);
-        }
-    }
-
-    private void drawForRenCols(int row, int col) {
-        if (col == from) {
-            matrix.drawItem(row, to);
-        } else if (col == to) {
-            matrix.drawItem(row, from);
-        } else {
-            matrix.drawItem(row, col);
-        }
-    }*/
 }
