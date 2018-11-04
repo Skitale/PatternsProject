@@ -9,15 +9,21 @@ import static com.task.utils.Validator.validateSize;
 public abstract class AbstractMatrix<T extends Number> implements IMatrix<T> {
     private IVector<T>[] data;
     private IDrawer<T> drawer;
+    private T zeroValue;
 
     public AbstractMatrix(int rows, int cols, IDrawer<T> drawer, T zeroValue) {
         validateSize(rows);
         validateSize(cols);
         this.drawer = drawer;
         this.data = new IVector[rows];
+        this.zeroValue = zeroValue;
         for (int i = 0; i < rows; i++) {
             this.data[i] = createVector(cols, zeroValue);
         }
+    }
+
+    protected T getZeroValue(){
+        return zeroValue;
     }
 
     public AbstractMatrix(int rows, int cols, T zeroValue) {

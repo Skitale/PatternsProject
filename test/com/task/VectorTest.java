@@ -22,7 +22,7 @@ public class VectorTest {
 
     @Test
     public void testSparseVector(){
-        IVector<Integer> vector = new SparseVector(SIZE);
+        IVector<Integer> vector = new SparseVector<>(SIZE, 0);
         testVector(vector);
 
         assertEquals(null, vector.get(3));

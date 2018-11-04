@@ -20,7 +20,7 @@ public class SwingWindow extends JFrame {
     private JCheckBox jCheckBox = new JCheckBox("enable border", true);
     private JComboBox<Pair<Integer, Integer>> comboBox = new JComboBox<>();
     private NormalMatrix<Integer> normalMatrix;
-    private SparseMatrix sparseMatrix;
+    private SparseMatrix<Integer> sparseMatrix;
     private int rows = 20;
     private int cols = 20;
     private Container gridContainer;
@@ -74,7 +74,7 @@ public class SwingWindow extends JFrame {
 
     private void initSparseMatrix() {
         updateRowsCols();
-        sparseMatrix = new SparseMatrix(rows, cols);
+        sparseMatrix = new SparseMatrix<>(rows, cols, 0);
         InitiatorMatrix.randomFillMatrix(sparseMatrix, rows * 2, 1100);
     }
 

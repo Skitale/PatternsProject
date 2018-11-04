@@ -25,7 +25,7 @@ public class MatrixTest {
 
     @Test
     public void testSparseVector(){
-        IMatrix<Integer> matrix = new SparseMatrix(ROWS, COLS, drawer);
+        IMatrix<Integer> matrix = new SparseMatrix<>(ROWS, COLS, drawer, 0);
         testMatrix(matrix);
 
         assertEquals(null, matrix.get(7,7));

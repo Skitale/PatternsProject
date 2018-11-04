@@ -5,14 +5,16 @@ import com.task.utils.Validator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SparseVector implements IVector<Integer> {
-    private Map<Integer, Integer> data;
+public class SparseVector<T extends Number> implements IVector<T> {
+    private Map<Integer, T> data;
     private int size;
+    private T zeroValue;
 
-    public SparseVector(int size) {
+    public SparseVector(int size, T zeroValue) {
         Validator.validateSize(size);
         this.size = size;
         data = new HashMap<>(this.size);
+        this.zeroValue = zeroValue;
     }
 
     @Override
@@ -21,7 +23,7 @@ public class SparseVector implements IVector<Integer> {
     }
 
     @Override
-    public void set(int pos, Integer value) {
+    public void set(int pos, T value) {
         Validator.validateIndex(pos, getSize());
         if(data.containsKey(pos)){
             data.replace(pos, value);
@@ -31,9 +33,9 @@ public class SparseVector implements IVector<Integer> {
     }
 
     @Override
-    public Integer get(int pos) {
+    public T get(int pos) {
         Validator.validateIndex(pos, getSize());
         if(data.containsKey(pos)) return data.get(pos);
-        return 0;
+        return zeroValue;
     }
 }
