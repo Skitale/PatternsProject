@@ -6,15 +6,14 @@ import com.task.drawers.IDrawer;
 import static com.task.utils.Validator.validateRowColIndexes;
 import static com.task.utils.Validator.validateSize;
 
-public abstract class AbstractMatrix<T extends Number> implements IMatrix<T> {
+public abstract class AbstractMatrix<T extends Number> extends AMatrixBridge<T> {
     private IVector<T>[] data;
-    private IDrawer<T> drawer;
     private T zeroValue;
 
     public AbstractMatrix(int rows, int cols, IDrawer<T> drawer, T zeroValue) {
+        super(drawer);
         validateSize(rows);
         validateSize(cols);
-        this.drawer = drawer;
         this.data = new IVector[rows];
         this.zeroValue = zeroValue;
         for (int i = 0; i < rows; i++) {
@@ -22,20 +21,12 @@ public abstract class AbstractMatrix<T extends Number> implements IMatrix<T> {
         }
     }
 
-    public T getZeroValue(){
-        return zeroValue;
-    }
-
     public AbstractMatrix(int rows, int cols, T zeroValue) {
         this(rows, cols, null, zeroValue);
     }
 
-    public void setDrawer(IDrawer<T> drawer) {
-        this.drawer = drawer;
-    }
-
-    public IDrawer<T> getDrawer() {
-        return drawer;
+    public T getZeroValue(){
+        return zeroValue;
     }
 
     @Override
@@ -61,15 +52,4 @@ public abstract class AbstractMatrix<T extends Number> implements IMatrix<T> {
     }
 
     abstract public IVector<T> createVector(int cols, T zeroValue);
-
-    @Override
-    abstract public void draw();
-
-    protected void drawBorder() {
-        drawer.drawBorder(this);
-    }
-
-    protected void drawItem(int i, int j) {
-        drawer.drawItem(this, i, j);
-    }
 }
