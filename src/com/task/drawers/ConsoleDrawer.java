@@ -61,7 +61,7 @@ public class ConsoleDrawer<T extends Number> implements IDrawer<T> {
         if (j == matrix.getCols() - 1 && enableBorder) {
             System.out.print("|");
         }
-        if (j == matrix.getCols() - 1 && i != matrix.getRows() - 1) {
+        if (j == matrix.getCols() - 1 /*&& i != matrix.getRows() - 1*/) {
             System.out.println();
         }
     }

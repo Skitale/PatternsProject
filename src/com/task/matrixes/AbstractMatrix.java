@@ -22,7 +22,7 @@ public abstract class AbstractMatrix<T extends Number> implements IMatrix<T> {
         }
     }
 
-    protected T getZeroValue(){
+    public T getZeroValue(){
         return zeroValue;
     }
 
@@ -32,6 +32,10 @@ public abstract class AbstractMatrix<T extends Number> implements IMatrix<T> {
 
     public void setDrawer(IDrawer<T> drawer) {
         this.drawer = drawer;
+    }
+
+    public IDrawer<T> getDrawer() {
+        return drawer;
     }
 
     @Override
@@ -56,7 +60,7 @@ public abstract class AbstractMatrix<T extends Number> implements IMatrix<T> {
         data[row].set(col, value);
     }
 
-    abstract protected IVector<T> createVector(int cols, T zeroValue);
+    abstract public IVector<T> createVector(int cols, T zeroValue);
 
     @Override
     abstract public void draw();

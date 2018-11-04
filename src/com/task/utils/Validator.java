@@ -2,7 +2,7 @@ package com.task.utils;
 
 public class Validator {
     public static void validateSize(int size) {
-        if (size <= 0) throw new UnsupportedOperationException("Size is negative or equal to zero");
+        if (size < 0) throw new UnsupportedOperationException("Size is negative");
     }
 
     public static void validateRowColIndexes(int rowIndex, int rowsSize, int colIndex, int colsSize) {

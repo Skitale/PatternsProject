@@ -14,7 +14,7 @@ public class NormalMatrix<T extends Number> extends AbstractMatrix<T> {
     }
 
     @Override
-    protected IVector<T> createVector(int cols, T zeroValue) {
+    public IVector<T> createVector(int cols, T zeroValue) {
         return new NormalVector<>(cols, zeroValue);
     }
 
