@@ -2,19 +2,39 @@ package com.task.composites;
 
 import com.task.drawers.IDrawer;
 import com.task.matrixes.AMatrixBridge;
+import com.task.matrixes.AbstractMatrix;
 import com.task.matrixes.iterators.IIterator;
 import com.task.utils.Validator;
+import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.BiFunction;
-
-public class HorizontalMatrixGroup extends AMatrixBridge<Integer> {
-    private List<AMatrixBridge<Integer>> matrixList;
+public class HorizontalMatrixGroup extends AbstractGroup {
 
     public HorizontalMatrixGroup(IDrawer<Integer> drawer) {
         super(drawer);
-        matrixList = new ArrayList<>();
+    }
+
+    @Override
+    protected Pair<Integer, Integer> convertLocalIndexesToGlobalIndexes(AMatrixBridge<Integer> locMatrix, int i, int j) {
+        int sizeIndexJ = 0;
+        for (AMatrixBridge<Integer> item : matrixList) {
+            if (item.equals(locMatrix)) {
+                break;
+            }
+            sizeIndexJ += item.getCols();
+        }
+        return new Pair<>(i, sizeIndexJ + j);
+    }
+
+    @Override
+    protected Pair<Integer, Integer> convertGlobalIndexesToLocalIndexes(AMatrixBridge<Integer> locMatrix, int i, int j) {
+        int sizeIndexJ = 0;
+        for (AMatrixBridge<Integer> item : matrixList) {
+            if (item.equals(locMatrix)) {
+                break;
+            }
+            sizeIndexJ += item.getCols();
+        }
+        return new Pair<>(i, j - sizeIndexJ);
     }
 
     @Override
@@ -65,15 +85,5 @@ public class HorizontalMatrixGroup extends AMatrixBridge<Integer> {
                 }
             }
         }
-    }
-
-
-    public void add(AMatrixBridge<Integer> matrix) {
-        matrixList.add(matrix);
-    }
-
-    @Override
-    public void iterate(IIterator<Integer> it, BiFunction<Integer, Integer, Integer> get) {
-
     }
 }
