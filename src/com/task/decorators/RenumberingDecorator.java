@@ -28,6 +28,13 @@ public class RenumberingDecorator extends AMatrixBridge<Integer> {
     }
 
     @Override
+    public void draw() {
+        drawBorder();
+        matrix.iterate((i, j, value) -> drawItem(i, j), (i, j) -> get(i, j));
+        drawBorder();
+    }
+
+    @Override
     public int getRows() {
         return matrix.getRows();
     }
