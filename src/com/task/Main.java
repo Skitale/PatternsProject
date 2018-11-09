@@ -28,25 +28,60 @@ public class Main {
         AMatrixBridge<Integer> matrix = new SparseMatrix<>(3, 3,0);
         matrix.setDrawer(drawer);
         InitiatorMatrix.randomFillMatrix(matrix, 5, 20);
-        for(int i = 0; i < matrix.getRows(); i++){
-            for(int j = 0; j < matrix.getCols(); j++){
-                System.out.print("("+matrix.get(i,j)+")");
-            }
-            System.out.println();
-        }
-        System.out.println();
-        AbstractMatrix<Integer> matrix2 = new NormalMatrix<>(5, 3,0);
+        //matrix.draw();
+
+        AbstractMatrix<Integer> matrix2 = new SparseMatrix<>(5, 3,0);
         matrix2.setDrawer(new ConsoleDrawer<>(true));
         InitiatorMatrix.randomFillMatrix(matrix2, 5, 20);
-        for(int i = 0; i < matrix2.getRows(); i++){
-            for(int j = 0; j < matrix2.getCols(); j++){
-                System.out.print("("+matrix2.get(i,j)+")");
+        //matrix2.draw();
+
+        AbstractMatrix<Integer> matrix3 = new NormalMatrix<>(5, 3,0);
+        matrix3.setDrawer(new ConsoleDrawer<>(true));
+        InitiatorMatrix.randomFillMatrix(matrix3, 5, 20);
+        //matrix3.draw();
+
+        AMatrixBridge<Integer> matrix2x2 = new SparseMatrix<>(2, 2,0);
+        matrix2x2.setDrawer(new ConsoleDrawer<>(true));
+        //InitiatorMatrix.randomFillMatrix(matrix2x2, 1, 20);
+        matrix2x2.set(0, 0, 1);
+        matrix2x2.draw();
+
+        AMatrixBridge<Integer> matrix2x2T = new SparseMatrix<>(2, 2,0);
+        matrix2x2T.setDrawer(new ConsoleDrawer<>(true));
+        //InitiatorMatrix.randomFillMatrix(matrix2x2T, 1, 20);
+        matrix2x2T.set(0, 1, 9);
+        matrix2x2T.draw();
+
+        HorizontalMatrixGroup group = new HorizontalMatrixGroup(new ConsoleDrawer<>(true));
+        group.add(matrix2x2);
+        group.add(matrix);
+        group.add(matrix3);
+        //group.draw();
+
+        VerticalMatrixGroup groupH2 = new VerticalMatrixGroup(new ConsoleDrawer<>(true));
+        //groupH2.add(matrix);
+        //groupH2.add(matrix2);
+        //groupH2.add(matrix3);
+        groupH2.add(matrix2x2T);
+
+        VerticalMatrixGroup vGroup = new VerticalMatrixGroup(new ConsoleDrawer<>(true));
+        vGroup.add(group);
+        vGroup.add(matrix2);
+        vGroup.add(matrix3);
+        vGroup.add(groupH2);
+        vGroup.draw();
+
+        AMatrixBridge<Integer> mTest = new RenumberingDecorator(vGroup, 0, 1, false);
+        mTest.draw();
+        mTest = new RenumberingDecorator(mTest, 0,1, true);
+        /*for(int i = 0; i < mTest.getRows(); i++){
+            for(int j = 0; j < mTest.getCols(); j++){
+                System.out.print("("+mTest.get(i,j)+")");
             }
             System.out.println();
-        }
-        System.out.println();
-
-        AbstractMatrix<Integer> matrix3 = new NormalMatrix<>(1, 10,0);
+        }*/
+        mTest.draw();
+        /*AbstractMatrix<Integer> matrix3 = new NormalMatrix<>(1, 10,0);
         matrix2.setDrawer(drawer);
         matrix3.set(0,0, 44);
         matrix3.set(0,1, 33);
@@ -67,7 +102,7 @@ public class Main {
         group.add(group1);
         group.draw();
         matrix = new RenumberingDecorator(group, 0, 5, false);
-        matrix.draw();
+        matrix.draw();*/
         /*for(int i = 0; i < group2.getRows(); i++){
             for(int j = 0; j < group2.getCols(); j++){
                 System.out.print("("+group2.get(i,j)+")");
@@ -76,9 +111,10 @@ public class Main {
         }
         System.out.println();
         group2.draw();*/
-        /*matrix.set(0,0, 0);*//* matrix.set(0,1, 0); matrix.set(0,2, 16);
-        matrix.set(1,0, 14); matrix.set(1,1, 0); matrix.set(1,2, 11);
-        matrix.set(2,0, 1); *//*matrix.set(2,1, 10); matrix.set(2,2, 3);*//*
+
+        /*matrix.set(0,0, 0);*//* *//*matrix.set(0,1, 0);*//* matrix.set(0,2, 16);
+        matrix.set(1,0, 14); *//*matrix.set(1,1, 0);*//* matrix.set(1,2, 11);
+        matrix.set(2,0, 1); matrix.set(2,1, 10); *//*matrix.set(2,2, 0);*//*
         System.out.println();
         matrix.draw();
         matrix = new RenumberingDecorator(matrix, 0, 2, true);
