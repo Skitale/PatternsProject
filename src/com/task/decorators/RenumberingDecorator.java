@@ -1,7 +1,10 @@
 package com.task.decorators;
 
 import com.task.matrixes.AMatrixBridge;
+import com.task.matrixes.iterators.IIterator;
 import com.task.utils.Validator;
+
+import java.util.function.BiFunction;
 
 public class RenumberingDecorator extends AMatrixBridge<Integer> {
     private AMatrixBridge<Integer> matrix;
@@ -93,5 +96,10 @@ public class RenumberingDecorator extends AMatrixBridge<Integer> {
     @Override
     public AMatrixBridge<Integer> getSourceObject() {
         return matrix.getSourceObject();
+    }
+
+    @Override
+    public void iterate(IIterator<Integer> it, BiFunction<Integer, Integer, Integer> get) {
+        matrix.iterate(it, get);
     }
 }

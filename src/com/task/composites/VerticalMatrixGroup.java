@@ -3,10 +3,12 @@ package com.task.composites;
 import com.task.drawers.IDrawer;
 import com.task.matrixes.AMatrixBridge;
 import com.task.matrixes.IMatrix;
+import com.task.matrixes.iterators.IIterator;
 import com.task.utils.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 
 public class VerticalMatrixGroup extends AMatrixBridge<Integer>{
     private List<AMatrixBridge<Integer>> matrixList;
@@ -69,5 +71,10 @@ public class VerticalMatrixGroup extends AMatrixBridge<Integer>{
 
     public void add(AMatrixBridge<Integer> matrix) {
         matrixList.add(matrix);
+    }
+
+    @Override
+    public void iterate(IIterator<Integer> it, BiFunction<Integer, Integer, Integer> get) {
+
     }
 }
