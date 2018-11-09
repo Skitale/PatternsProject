@@ -37,7 +37,7 @@ public class SparseMatrix<T extends Number> extends AbstractMatrix<T> {
     @Override
     public void iterate(IIterator<T> it, BiFunction<Integer, Integer, T> get) {
         for(int i = 0; i < getRows(); i++){
-            for(int j = 0; j < getRows(); j++){
+            for(int j = 0; j < getCols(); j++){
                 if(!getZeroValue().equals(get.apply(i, j))) {
                     it.iterator(i, j, get.apply(i, j));
                 }
