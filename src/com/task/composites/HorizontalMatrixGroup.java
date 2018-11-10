@@ -2,10 +2,11 @@ package com.task.composites;
 
 import com.task.drawers.IDrawer;
 import com.task.matrixes.AMatrixBridge;
-import com.task.matrixes.AbstractMatrix;
-import com.task.matrixes.iterators.IIterator;
 import com.task.utils.Validator;
 import javafx.util.Pair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HorizontalMatrixGroup extends AbstractGroup {
 
@@ -84,6 +85,29 @@ public class HorizontalMatrixGroup extends AbstractGroup {
                     matrix.set(row, col - offset, value);
                 }
             }
+            offset += matrix.getCols();
         }
+    }
+
+    @Override
+    protected List<Pair<Integer, Integer>> getAllEmptyCells() {
+        List<Pair<Integer, Integer>> listEmptyValue = new ArrayList<>();
+        for (int i = 0; i < getRows(); i++) {
+            for (int j = 0; j < getCols(); j++) {
+                int offset = 0;
+                for (AMatrixBridge<Integer> matrix : matrixList) {
+                    if (j - offset < matrix.getCols()) {
+                        if (i < matrix.getRows()) {
+                            break;
+                        } else {
+                            listEmptyValue.add(new Pair<>(i, j));
+                            break;
+                        }
+                    }
+                    offset += matrix.getCols();
+                }
+            }
+        }
+        return listEmptyValue;
     }
 }

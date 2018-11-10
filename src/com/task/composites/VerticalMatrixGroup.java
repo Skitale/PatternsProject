@@ -6,6 +6,9 @@ import com.task.matrixes.IMatrix;
 import com.task.utils.Validator;
 import javafx.util.Pair;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VerticalMatrixGroup extends AbstractGroup {
 
     public VerticalMatrixGroup(IDrawer<Integer> drawer) {
@@ -85,5 +88,27 @@ public class VerticalMatrixGroup extends AbstractGroup {
             }
             offset += matrix.getRows();
         }
+    }
+
+    @Override
+    protected List<Pair<Integer, Integer>> getAllEmptyCells() {
+        List<Pair<Integer, Integer>> listEmptyValue = new ArrayList<>();
+        for (int i = 0; i < getRows(); i++) {
+            for (int j = 0; j < getCols(); j++) {
+                int offset = 0;
+                for (IMatrix<Integer> matrix : matrixList) {
+                    if (i - offset < matrix.getRows()) {
+                        if (j < matrix.getCols()) {
+                            break;
+                        } else {
+                            listEmptyValue.add(new Pair<>(i, j));
+                            break;
+                        }
+                    }
+                    offset += matrix.getRows();
+                }
+            }
+        }
+        return listEmptyValue;
     }
 }

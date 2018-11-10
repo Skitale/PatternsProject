@@ -24,6 +24,9 @@ abstract public class AbstractGroup extends AMatrixBridge<Integer> {
     @Override
     public void draw(){
         drawBorder();
+        for(Pair<Integer, Integer> p : getAllEmptyCells()){
+            drawItem(p.getKey(), p.getValue());
+        }
         for(AMatrixBridge<Integer> matrix : matrixList){
             matrix.iterate(new IIterator<Integer>() {
                 @Override
@@ -43,6 +46,9 @@ abstract public class AbstractGroup extends AMatrixBridge<Integer> {
 
     @Override
     public void iterate(IIterator<Integer> it, BiFunction<Integer, Integer, Integer> get) {
+        for(Pair<Integer, Integer> p : getAllEmptyCells()){
+            it.iterator(p.getKey(), p.getValue(), get.apply(p.getKey(), p.getValue()));
+        }
         for(AMatrixBridge<Integer> matrix : matrixList){
             matrix.iterate(new IIterator<Integer>() {
                 @Override
@@ -59,6 +65,8 @@ abstract public class AbstractGroup extends AMatrixBridge<Integer> {
             });
         }
     }
+
+    abstract protected List<Pair<Integer, Integer>> getAllEmptyCells();
 
     public void add(AMatrixBridge<Integer> matrix) {
         matrixList.add(matrix);
