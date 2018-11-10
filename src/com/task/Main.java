@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         IDrawer<Integer> drawer = new ConsoleDrawer<>(true);
         SwingWindow swingWindow = new SwingWindow(800, 600);
-        //swingWindow.setVisible(true);
+        swingWindow.setVisible(true);
         /*StatisticsMatrix statisticsMatrix = new StatisticsMatrix(matrixes);
         statisticsMatrix.printMatrix();
         StringBuilder sb = new StringBuilder();
@@ -28,17 +28,17 @@ public class Main {
         AMatrixBridge<Integer> matrix = new SparseMatrix<>(3, 3,0);
         matrix.setDrawer(drawer);
         InitiatorMatrix.randomFillMatrix(matrix, 5, 20);
-        //matrix.draw();
+        matrix.draw();
 
         AbstractMatrix<Integer> matrix2 = new SparseMatrix<>(5, 3,0);
         matrix2.setDrawer(new ConsoleDrawer<>(true));
         InitiatorMatrix.randomFillMatrix(matrix2, 5, 20);
-        //matrix2.draw();
+        matrix2.draw();
 
         AbstractMatrix<Integer> matrix3 = new NormalMatrix<>(5, 3,0);
         matrix3.setDrawer(new ConsoleDrawer<>(true));
         InitiatorMatrix.randomFillMatrix(matrix3, 5, 20);
-        //matrix3.draw();
+        matrix3.draw();
 
         AMatrixBridge<Integer> matrix2x2 = new SparseMatrix<>(2, 2,0);
         matrix2x2.setDrawer(new ConsoleDrawer<>(true));
@@ -69,10 +69,10 @@ public class Main {
         vGroup.add(matrix2);
         vGroup.add(matrix3);
         vGroup.add(groupH2);
-        vGroup.draw();
+        //vGroup.draw();
 
         AMatrixBridge<Integer> mTest = new RenumberingDecorator(vGroup, 0, 1, false);
-        mTest.draw();
+        //mTest.draw();
         mTest = new RenumberingDecorator(mTest, 0,1, true);
         /*for(int i = 0; i < mTest.getRows(); i++){
             for(int j = 0; j < mTest.getCols(); j++){
@@ -80,7 +80,7 @@ public class Main {
             }
             System.out.println();
         }*/
-        mTest.draw();
+        //mTest.draw();
         /*AbstractMatrix<Integer> matrix3 = new NormalMatrix<>(1, 10,0);
         matrix2.setDrawer(drawer);
         matrix3.set(0,0, 44);
