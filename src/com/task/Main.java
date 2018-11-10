@@ -28,29 +28,29 @@ public class Main {
         AMatrixBridge<Integer> matrix = new SparseMatrix<>(3, 3,0);
         matrix.setDrawer(drawer);
         InitiatorMatrix.randomFillMatrix(matrix, 5, 20);
-        matrix.draw();
+        //matrix.draw();
 
         AbstractMatrix<Integer> matrix2 = new SparseMatrix<>(5, 3,0);
         matrix2.setDrawer(new ConsoleDrawer<>(true));
         InitiatorMatrix.randomFillMatrix(matrix2, 5, 20);
-        matrix2.draw();
+       // matrix2.draw();
 
         AbstractMatrix<Integer> matrix3 = new NormalMatrix<>(5, 3,0);
         matrix3.setDrawer(new ConsoleDrawer<>(true));
         InitiatorMatrix.randomFillMatrix(matrix3, 5, 20);
-        matrix3.draw();
+        //matrix3.draw();
 
         AMatrixBridge<Integer> matrix2x2 = new SparseMatrix<>(2, 2,0);
         matrix2x2.setDrawer(new ConsoleDrawer<>(true));
         //InitiatorMatrix.randomFillMatrix(matrix2x2, 1, 20);
         matrix2x2.set(0, 0, 1);
-        matrix2x2.draw();
+        //matrix2x2.draw();
 
         AMatrixBridge<Integer> matrix2x2T = new SparseMatrix<>(2, 2,0);
         matrix2x2T.setDrawer(new ConsoleDrawer<>(true));
         //InitiatorMatrix.randomFillMatrix(matrix2x2T, 1, 20);
         matrix2x2T.set(0, 1, 9);
-        matrix2x2T.draw();
+        //matrix2x2T.draw();
 
         HorizontalMatrixGroup group = new HorizontalMatrixGroup(new ConsoleDrawer<>(true));
         group.add(matrix2x2);
@@ -71,9 +71,9 @@ public class Main {
         vGroup.add(groupH2);
         //vGroup.draw();
 
-        AMatrixBridge<Integer> mTest = new RenumberingDecorator(vGroup, 0, 1, false);
-        //mTest.draw();
-        mTest = new RenumberingDecorator(mTest, 0,1, true);
+        /*AMatrixBridge<Integer> mTest = new RenumberingDecorator(vGroup, 0, 7, false);
+        mTest.draw();*/
+        //mTest = new RenumberingDecorator(mTest, 0,1, true);
         /*for(int i = 0; i < mTest.getRows(); i++){
             for(int j = 0; j < mTest.getCols(); j++){
                 System.out.print("("+mTest.get(i,j)+")");
@@ -81,6 +81,25 @@ public class Main {
             System.out.println();
         }*/
         //mTest.draw();
+
+        AbstractMatrix<Integer> m1W = new SparseMatrix<>(2, 2,0);
+        m1W.set(0,0, 1);
+        AbstractMatrix<Integer> m2W = new SparseMatrix<>(2, 2,0);
+        m2W.set(1,1, 2);
+        AbstractMatrix<Integer> m3W = new NormalMatrix<>(2, 2,0);
+        m3W.set(1,0, 3);
+        HorizontalMatrixGroup gW1H = new HorizontalMatrixGroup(null);
+        gW1H.add(m1W); gW1H.add(m2W); gW1H.add(m3W);
+
+        AbstractMatrix<Integer> m2H = new SparseMatrix<>(2, 2,0);
+        m2H.set(0, 1, 4);
+        AbstractMatrix<Integer> m3H = new NormalMatrix<>(2, 2,0);
+        m3H.set(1, 0, 5);
+        VerticalMatrixGroup vGroup1 = new VerticalMatrixGroup(new ConsoleDrawer<>(true));
+        vGroup1.add(gW1H); vGroup1.add(m2H); vGroup1.add(m3H);
+         vGroup1.draw();
+        RenumberingDecorator rd = new RenumberingDecorator(vGroup1,0, 4, false);
+        rd.draw();
         /*AbstractMatrix<Integer> matrix3 = new NormalMatrix<>(1, 10,0);
         matrix2.setDrawer(drawer);
         matrix3.set(0,0, 44);
