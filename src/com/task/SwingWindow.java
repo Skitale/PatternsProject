@@ -136,20 +136,27 @@ public class SwingWindow extends JFrame {
             if(tmpSize + divI <= size){
                 tmpSize += divI;
                 sizeParts.add(divI);
-            }
-
-            if(i == numParts - 1 && tmpSize + divI > size){
+            } else if(i == numParts - 1){
                 sizeParts.add(size - tmpSize);
                 tmpSize += size - tmpSize;
             }
+        }
+
+        if(size > tmpSize){
+            int lastSize = sizeParts.get(sizeParts.size() - 1);
+            int delta = size - tmpSize;
+            sizeParts.set(sizeParts.size() - 1, lastSize + delta);
         }
 
         int sum = 0;
         for(Integer i : sizeParts){
             sum += i;
         }
+
         if(sum != size){
             throw new UnsupportedOperationException("check divide size into parts");
+        } else if(sizeParts.size() != numParts) {
+            throw new UnsupportedOperationException("return wrong num parts");
         }
         return sizeParts;
     }
