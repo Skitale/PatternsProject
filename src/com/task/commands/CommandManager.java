@@ -27,6 +27,7 @@ public class CommandManager {
     }
 
     public void undo(){
+        if(commandList.size() == 1) return;
         commandList.remove(commandList.size() - 1);
         lock = true;
         for(ICommand command: commandList){
