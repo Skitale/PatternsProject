@@ -239,10 +239,10 @@ public class SwingWindow extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             if(lastMatrixDraw == null) return;
-            int i1 = (int) (Math.random() * rows);
-            int i2 = (int) (Math.random() * rows);
-            int j1 = (int) (Math.random() * cols);
-            int j2 = (int) (Math.random() * cols);
+            int i1 = (int) (Math.random() * lastMatrixDraw.getRows());
+            int i2 = (int) (Math.random() * lastMatrixDraw.getRows());
+            int j1 = (int) (Math.random() * lastMatrixDraw.getCols());
+            int j2 = (int) (Math.random() * lastMatrixDraw.getCols());
             int rowsOrCols = (int) (Math.random() * 2);
             if(rowsOrCols == 0){
                 decorator = new RenumberingDecorator(lastMatrixDraw, i1, i2, true);
