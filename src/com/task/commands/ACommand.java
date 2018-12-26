@@ -4,8 +4,11 @@ abstract public class ACommand implements ICommand {
     @Override
     public void execute() {
         doExecute();
-        //logic registry in command manager
+        CommandManager.getInstance().registryCommand(this.clone());
     }
 
     abstract protected void doExecute();
+
+    @Override
+    abstract protected ACommand clone();
 }

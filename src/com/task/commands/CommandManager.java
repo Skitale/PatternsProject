@@ -6,6 +6,7 @@ import java.util.List;
 public class CommandManager {
     private List<ICommand> commandList;
     private static CommandManager commandManager;
+    private boolean lock;
 
     private CommandManager(){
         commandList = new ArrayList<>();
@@ -19,8 +20,18 @@ public class CommandManager {
     }
 
     public void registryCommand(ICommand command){
+        if(lock) return;
         if(command != null){
             commandList.add(command);
         }
+    }
+
+    public void undo(){
+        commandList.remove(commandList.size() - 1);
+        lock = true;
+        for(ICommand command: commandList){
+            command.execute();
+        }
+        lock = false;
     }
 }
