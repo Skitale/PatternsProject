@@ -1,5 +1,7 @@
 package com.task;
 
+import com.task.commands.CommandManager;
+import com.task.commands.impl.InitMatrix;
 import com.task.composites.HorizontalMatrixGroup;
 import com.task.composites.VerticalMatrixGroup;
 import com.task.decorators.RenumberingDecorator;
@@ -33,10 +35,15 @@ public class SwingWindow extends JFrame {
     private VerticalMatrixGroup vGroup;
     private AMatrixBridge<Integer> lastMatrixDraw;
     private RenumberingDecorator decorator;
+    private static NormalMatrix<Integer> matrixForUndoOperations;
     private int rows = 20;
     private int cols = 20;
     private Container gridContainer;
     private Container rootContainer;
+
+    static {
+        CommandManager.getInstance().registryCommand(new InitMatrix(matrixForUndoOperations, 10, 10));
+    }
 
     public SwingWindow(int width, int height) {
         super("Draw matrixes");
@@ -88,6 +95,11 @@ public class SwingWindow extends JFrame {
         updateRowsCols();
         normalMatrix = new NormalMatrix<>(rows, cols, 0);
         InitiatorMatrix.randomFillMatrix(normalMatrix, rows * 2, 1100);
+    }
+
+    private void initMatrixForUndoOperation() {
+        updateRowsCols();
+        matrixForUndoOperations = new NormalMatrix<>(10, 10, 0);
     }
 
     private void initSparseMatrix() {
