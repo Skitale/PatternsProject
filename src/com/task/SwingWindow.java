@@ -2,6 +2,7 @@ package com.task;
 
 import com.task.commands.CommandManager;
 import com.task.commands.impl.InitMatrix;
+import com.task.commands.impl.MatrixSet;
 import com.task.composites.HorizontalMatrixGroup;
 import com.task.composites.VerticalMatrixGroup;
 import com.task.decorators.RenumberingDecorator;
@@ -28,6 +29,9 @@ public class SwingWindow extends JFrame {
     private JButton generateVertGroupMatrixesButton = new JButton("Generate the V group");
     private JButton restoreButton = new JButton("Restore");
     private JButton renumberButton = new JButton("Renumber");
+    private JButton showCommandMatrixButton = new JButton("Show command matrix");
+    private JButton changeRandomCelButton = new JButton("Change random cel");
+    private JButton undoButton = new JButton("Undo");
     private JCheckBox jCheckBox = new JCheckBox("enable border", true);
     private JComboBox<Pair<Integer, Integer>> comboBox = new JComboBox<>();
     private NormalMatrix<Integer> normalMatrix;
@@ -42,6 +46,7 @@ public class SwingWindow extends JFrame {
     private Container rootContainer;
 
     static {
+        initMatrixForUndoOperation();
         CommandManager.getInstance().registryCommand(new InitMatrix(matrixForUndoOperations, 10, 10));
     }
 
@@ -63,14 +68,24 @@ public class SwingWindow extends JFrame {
         panel.add(jCheckBox);
         rootContainer.add(panel);
         rootContainer.add(Box.createVerticalStrut(5));
+        addAllListeners();
+
+        Box downPanel = Box.createHorizontalBox();
+        downPanel.add(showCommandMatrixButton); downPanel.add(changeRandomCelButton); downPanel.add(undoButton);
+        gridContainer = new Panel();
+        rootContainer.add(gridContainer);
+        rootContainer.add(downPanel);
+    }
+
+    private void addAllListeners(){
         generateSimpMatrixButton.addMouseListener(new GenerateNormalHandler());
         generateSparMatrixButton.addMouseListener(new GenerateSparseHandler());
         generateVertGroupMatrixesButton.addMouseListener(new GenerateVGroupHandler());
         renumberButton.addMouseListener(new RenumberMatrixHandler());
         restoreButton.addMouseListener(new RestoreFromRenumberingMatrixHandler());
-
-        gridContainer = new Panel();
-        rootContainer.add(gridContainer);
+        showCommandMatrixButton.addMouseListener(new ShowCommandMatrixHandler());
+        changeRandomCelButton.addMouseListener(new ChangeRandomCelMatrixHandler());
+        undoButton.addMouseListener(new UndoMatrixHandler());
     }
 
     private void initComboBox() {
@@ -97,8 +112,7 @@ public class SwingWindow extends JFrame {
         InitiatorMatrix.randomFillMatrix(normalMatrix, rows * 2, 1100);
     }
 
-    private void initMatrixForUndoOperation() {
-        updateRowsCols();
+    private static void initMatrixForUndoOperation() {
         matrixForUndoOperations = new NormalMatrix<>(10, 10, 0);
     }
 
@@ -246,6 +260,34 @@ public class SwingWindow extends JFrame {
             AMatrixBridge<Integer> sourceMat = decorator.getSourceObject();
             onClick(sourceMat);
             decorator = null;
+        }
+    }
+
+    class ShowCommandMatrixHandler extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent mouseEvent) {
+            if(matrixForUndoOperations == null) return;
+            onClick(matrixForUndoOperations);
+        }
+    }
+
+    class ChangeRandomCelMatrixHandler extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent mouseEvent) {
+            int i = (int) (Math.random() * matrixForUndoOperations.getRows());
+            int j = (int) (Math.random() * matrixForUndoOperations.getCols());
+            int value = (int) (Math.random() * 1100);
+            MatrixSet msCommand = new MatrixSet(matrixForUndoOperations, i, j, value);
+            msCommand.execute();
+            onClick(matrixForUndoOperations);
+        }
+    }
+
+    class UndoMatrixHandler extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent mouseEvent) {
+            CommandManager.getInstance().undo();
+            onClick(matrixForUndoOperations);
         }
     }
 }

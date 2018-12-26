@@ -16,6 +16,7 @@ public class InitMatrix extends ACommand {
 
     @Override
     protected void doExecute() {
+        if(matrix == null) return;
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
                 matrix.set(i, j, 0);
